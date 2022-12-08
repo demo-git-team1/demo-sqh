@@ -1,0 +1,152 @@
+<div class="row mt-3">
+  <button [routerLink]="['/']" class="btn btn-outline-info w-auto">Quay Lại</button>
+</div>
+<div class="row d-flex justify-content-center">
+  <form *ngIf="rfTicket" [formGroup]="rfTicket" class="w-50 form-add" (click)="removeErrorBackEnd()">
+    <div class="mb-3 w-100">
+      <h2 class="text-center" style="font-family: sans-serif">Tạo mới vé xe</h2>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="mb-3 w-50" style="padding-right: 12px">
+        <label class="form-label">Điểm đi</label>
+        <input type="text" class="form-control" formControlName="start"
+               [ngClass]="errorBackEnd?.length > 0 ?'is-invalid' : rfTicket.controls.start.touched ? rfTicket.controls.start.valid? 'is-valid' : 'is-invalid' : ''">
+        <div class="invalid-feedback">
+          <div *ngIf="errorBackEnd?.length == 0">
+            <span *ngIf="rfTicket.controls.start.errors?.required">
+              Không được bỏ trống
+            </span>
+            <span *ngIf="rfTicket.controls.start.errors?.minlength ||
+                    rfTicket.controls.start.errors?.maxlength">
+              Số ký tự tối thiểu : 5, tối đa: 30
+            </span>
+          </div>
+          <div *ngFor="let error of errorBackEnd">
+            <span *ngIf="error.field == 'start'" class="text-danger">{{error.message}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 w-50" style="padding-left: 12px">
+        <label class="form-label">Điểm đến</label>
+        <input type="text" class="form-control" formControlName="end"
+               [ngClass]="errorBackEnd?.length > 0 ?'is-invalid' : rfTicket.controls.end.touched ? rfTicket.controls.end.valid? 'is-valid' : 'is-invalid' : ''">
+        <div class="invalid-feedback">
+          <div *ngIf="errorBackEnd?.length == 0">
+            <span *ngIf="rfTicket.controls.end.errors?.required">
+              Không được bỏ trống
+            </span>
+            <span *ngIf="rfTicket.controls.end.errors?.minlength ||
+                    rfTicket.controls.end.errors?.maxlength">
+              Số ký tự tối thiểu : 5, tối đa: 30
+            </span>
+          </div>
+          <div *ngFor="let error of errorBackEnd">
+            <span *ngIf="error.field == 'end'" class="text-danger">{{error.message}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="mb-3 w-50" style="padding-right: 12px">
+        <label class="form-label">Giá vé</label>
+        <input type="text" class="form-control" formControlName="price"
+               [ngClass]="errorBackEnd?.length > 0 ? 'is-invalid' : rfTicket.controls.price.touched ? rfTicket.controls.price.valid? 'is-valid' : 'is-invalid' : ''">
+        <div class="invalid-feedback">
+          <div *ngIf="errorBackEnd?.length == 0">
+            <span *ngIf="rfTicket.controls.price.errors?.required">
+              Không được bỏ trống
+            </span>
+            <span *ngIf="rfTicket.controls.price.errors?.min ||
+                    rfTicket.controls.price.errors?.max">
+              Giá vé tối thiểu : 0, tối đa: 1000000
+            </span>
+            <span *ngIf="rfTicket.controls.price.errors?.pattern">
+              Vui lòng nhập đúng định dạng số! ví dụ: 9999.99
+            </span>
+          </div>
+          <div *ngFor="let error of errorBackEnd">
+            <span *ngIf="error.field == 'price'" class="text-danger">{{error.message}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 w-50" style="padding-left: 12px">
+        <label class="form-label">Số lượng vé: </label>
+        <input type="number" class="form-control" formControlName="quality"
+               [ngClass]="errorBackEnd?.length > 0 ? 'is-invalid' : rfTicket.controls.quality.touched ? rfTicket.controls.quality.valid? 'is-valid' : 'is-invalid' : ''">
+        <div class="invalid-feedback">
+          <div *ngIf="errorBackEnd?.length == 0">
+            <span *ngIf="rfTicket.controls.quality.errors?.required">
+              Không được bỏ trống
+            </span>
+            <span *ngIf="rfTicket.controls.quality.errors?.min ||
+                    rfTicket.controls.quality.errors?.max">
+              Số lượng vé tối thiểu : 0, tối đa: 1000
+            </span>
+            <span *ngIf="rfTicket.controls.quality.errors?.pattern">
+              Vui lòng nhập đúng định dạng số!
+            </span>
+          </div>
+          <div *ngFor="let error of errorBackEnd">
+            <span *ngIf="error.field == 'quality'" class="text-danger">{{error.message}}</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="mb-3 w-50" style="padding-right: 12px">
+        <label class="form-label">Ngày khởi hành</label>
+        <input type="date" class="form-control" formControlName="startDay"
+               [ngClass]="errorBackEnd?.length > 0 ? 'is-invalid' : rfTicket.controls.startDay.touched ?
+               rfTicket.controls.startDay.valid  && !rfTicket.errors?.checkStartDay ? 'is-valid' : 'is-invalid' : ''">
+        <div class="invalid-feedback">
+          <div *ngIf="errorBackEnd?.length == 0">
+            <span *ngIf="rfTicket.controls.startDay.errors?.required">
+              Không được bỏ trống
+            </span>
+            <span *ngIf="rfTicket.controls.startDay.errors?.pattern">
+              Vui lòng nhập đúng định dạng: yyyy-mm-dd
+            </span>
+            <span *ngIf="rfTicket.errors?.checkStartDay">
+              Bạn không thể khởi hành trong khóa khứ được
+            </span>
+          </div>
+          <div *ngFor="let error of errorBackEnd">
+            <span *ngIf="error.field == 'startDay'" class="text-danger">{{error.message}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 w-50" style="padding-left: 12px">
+        <label class="form-label">Giờ khởi hành</label>
+        <input id="time" type="time" class="form-control" formControlName="startHours"
+               [ngClass]="errorBackEnd?.length > 0 ? 'is-invalid' : rfTicket.controls.startHours.touched ?
+                        rfTicket.controls.startHours.valid && !rfTicket.errors?.checkStartHours ? 'is-valid' : 'is-invalid' : ''">
+        <div class="invalid-feedback">
+          <div *ngIf="errorBackEnd?.length == 0">
+            <span *ngIf="rfTicket.controls.startHours.errors?.required">
+              Không được bỏ trống
+            </span>
+            <span *ngIf="rfTicket.controls.startHours.errors?.pattern">
+              Vui lòng nhập đúng định dạng: hh:mm
+            </span>
+            <span *ngIf="rfTicket.errors?.checkStartHours">
+              Bạn không thể khởi hành trong khóa khứ được
+            </span>
+          </div>
+          <div *ngFor="let error of errorBackEnd">
+            <span *ngIf="error.field == 'startHours'" class="text-danger">{{error.message}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Nhà xe</label>
+      <select class="form-select" formControlName="garage" [compareWith]="compareGarage">
+        <option *ngFor="let garage of garages" [ngValue]="garage">{{garage.name}}</option>
+      </select>
+    </div>
+    <!--    <button [disabled]="rfTicket.invalid" type="button" (click)="createTicket()" class=" w-100 btn btn-primary">Thêm mới</button>-->
+    <button type="button" (click)="createTicket()" class=" w-100 btn btn-primary">Thêm mới</button>
+  </form>
+</div>

@@ -1,0 +1,11 @@
+.my-pagination /deep/ .ngx-pagination {
+  margin-bottom: 0;
+}
+.my-pagination /deep/ .ngx-pagination .current {
+  background: #e74c3c;
+  border-radius: 2px;
+}
+
+.my-pagination /deep/ .ngx-pagination a {
+  text-decoration: none;
+}

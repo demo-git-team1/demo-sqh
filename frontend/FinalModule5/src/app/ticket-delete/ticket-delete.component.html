@@ -1,0 +1,48 @@
+<div class="row mt-3">
+  <button [routerLink]="['/']" class="btn btn-outline-info w-auto">Quay Lại</button>
+</div>
+<div class="row d-flex justify-content-center">
+  <form *ngIf="rfTicket" [formGroup]="rfTicket" class="w-50 form-delete">
+    <div class="mb-3 w-100">
+      <h2 class="text-center" style="font-family: sans-serif">Vé xe sau sẽ bị xóa</h2>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="mb-3 w-50"  style="padding-right: 12px">
+        <label class="form-label">Điểm đi</label>
+        <input [readOnly]="true" type="text" class="form-control" formControlName="start">
+      </div>
+      <div class="mb-3 w-50"  style="padding-left: 12px">
+        <label class="form-label">Điểm đến</label>
+        <input [readOnly]="true" type="text" class="form-control" formControlName="end">
+      </div>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="mb-3 w-50" style="padding-right: 12px">
+        <label class="form-label">Giá vé</label>
+        <input [readOnly]="true" type="text" class="form-control" formControlName="price">
+      </div>
+      <div class="mb-3 w-50" style="padding-left: 12px">
+        <label class="form-label">Số lượng vé: </label>
+        <input [readOnly]="true" type="text" class="form-control" formControlName="quality">
+      </div>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="mb-3 w-50" style="padding-right: 12px">
+        <label class="form-label">Ngày khởi hành</label>
+        <input [readOnly]="true" type="date" class="form-control" formControlName="startDay">
+      </div>
+      <div class="mb-3 w-50" style="padding-left: 12px">
+        <label class="form-label">Giờ khởi hành</label>
+        <input [readOnly]="true" type="time" class="form-control" formControlName="startHours">
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Nhà xe</label>
+      <select disabled class="form-select" formControlName="garage" [compareWith]="compareGarage">
+        <option *ngFor="let garage of garages" [ngValue]="garage">{{garage.name}}</option>
+      </select>
+    </div>
+    <button type="button" (click)="deleteTicket()" class=" w-100 btn btn-danger">Xóa vé</button>
+  </form>
+</div>
